@@ -15,6 +15,13 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api/user", (req, res) => {
+  // const { filter, value } = req.query;
+  const {
+    query: { filter, value },
+  } = req;
+  if (filter && value) {
+    res.send(mockUsers.filter((user) => user[filter].includes(value)));
+  }
   res.status(201).send(mockUsers);
 });
 
