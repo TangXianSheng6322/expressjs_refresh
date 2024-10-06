@@ -5,10 +5,10 @@ app.use(express.json());
 const PORT = process.env.PORT || 3000;
 
 const mockUsers = [
-  { id: 1, username: "violet", displayName: "SLQueen" },
-  { id: 2, username: "sasha", displayName: "kOL" },
-  { id: 3, username: "nina", displayName: "Joomn" },
-  { id: 4, username: "mike", displayName: "TYSM" },
+  { id: 1, userName: "violet", displayName: "SLQueen" },
+  { id: 2, userName: "sasha", displayName: "kOL" },
+  { id: 3, userName: "nina", displayName: "Joomn" },
+  { id: 4, userName: "mike", displayName: "TYSM" },
 ];
 
 app.get("/", (req, res) => {
@@ -56,6 +56,20 @@ app.put("/api/user/:id", (req, res) => {
   const findIndex = mockUsers.findIndex((user) => user.id === parsedId);
   if (findIndex === -1) return res.sendStatus(404);
   mockUsers[findIndex] = { id: parsedId, ...body };
+  return res.sendStatus(200);
+});
+
+app.patch("/api/user/:id", (req, res) => {
+  const {
+    body,
+    params: { id },
+  } = req;
+
+  const parsedId = parseInt(id);
+  if (isNaN(parsedId)) return res.sendStatus(400);
+  const findUserIndex = mockUsers.findIndex((user) => user.id === parsedId);
+  if (findUserIndex === -1) return res.sendStatus(404);
+  mockUsers[findUserIndex] = { ...mockUsers[findUserIndex], ...body };
   return res.sendStatus(200);
 });
 
