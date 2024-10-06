@@ -22,8 +22,9 @@ app.get("/api/user", (req, res) => {
   } = req;
   if (filter && value) {
     res.send(mockUsers.filter((user) => user[filter].includes(value)));
+  } else {
+    return res.status(200).send(mockUsers);
   }
-  res.status(201).send(mockUsers);
 });
 
 app.post("/api/user", (req, res) => {
@@ -71,6 +72,32 @@ app.patch("/api/user/:id", (req, res) => {
   if (findUserIndex === -1) return res.sendStatus(404);
   mockUsers[findUserIndex] = { ...mockUsers[findUserIndex], ...body };
   return res.sendStatus(200);
+});
+
+app.delete("/api/user/:id", (req, res) => {
+  const {
+    params: { id },
+  } = req;
+
+  const parsedId = parseInt(id);
+  if (isNaN(parsedId)) return res.sendStatus(400);
+  const findUserIndex = mockUsers.findIndex((user) => user.id === parsedId);
+  if (findUserIndex === -1) return res.sendStatus(404);
+  mockUsers.splice(findUserIndex, 1);
+  return res.sendStatus(200);
+});
+
+app.delete("/api/user", (req, res) => {
+  const {
+    query: { filter, value },
+  } = req;
+  console.log(filter, value);
+
+  if (filter === "all" && value === "true") {
+    mockUsers.splice(0, mockUsers.length);
+  }
+
+  return res.status(200).send(mockUsers);
 });
 
 app.listen(PORT, () => {
