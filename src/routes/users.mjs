@@ -5,11 +5,11 @@ import {
   checkSchema,
   matchedData,
 } from "express-validator";
-import { createValidationSchemas } from "../utils/validationSchemas.mjs";
+import { createValidationSchemas } from "../utils/_validationSchemas.mjs";
 //constants
-import { mockUsers } from "../utils/constants.mjs";
+import { mockUsers } from "../utils/_constants.mjs";
 //middleware
-import { resolveUserById, loggingMiddlewear } from "../utils/middleware.mjs";
+import { resolveUserById, loggingMiddlewear } from "../utils/_middleware.mjs";
 
 const router = Router();
 
