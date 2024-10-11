@@ -26,6 +26,14 @@ router.get(
     ),
   (req, res) => {
     // const { filter, value } = req.query;
+    console.log(req.session.id);
+    req.sessionStore.get(req.sessionID, (err, sessionData) => {
+      if (err) {
+        console.log(err);
+        throw err;
+      }
+      console.log(sessionData);
+    });
     const {
       query: { filter, value },
     } = req;
