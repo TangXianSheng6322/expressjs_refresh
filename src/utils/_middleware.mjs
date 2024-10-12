@@ -1,4 +1,3 @@
-import express from "express";
 import { mockUsers } from "./_constants.mjs";
 
 export const loggingMiddlewear = (req, res, next) => {
